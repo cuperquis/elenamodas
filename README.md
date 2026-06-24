@@ -1,2 +1,0 @@
-# elenamodas
-tienda de modas
