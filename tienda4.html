@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELENA MODAS - Zapatería Exclusiva</title>
+    <!-- Cargamos fuentes elegantes desde Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ESTILOS GENERALES Y PALETA OLD MONEY --- */
+        :root {
+            --bg-principal: #fdfbf7;      /* Crema suave */
+            --texto-oscuro: #1a2530;      /* Azul marino muy oscuro / casi negro */
+            --dorado-premium: #c5a880;    /* Dorado sutil / champaña */
+            --blanco-puro: #ffffff;
+            --gris-suave: #f4ede2;        /* Beige claro para fondos secundarios */
+            --sombra: rgba(26, 37, 48, 0.08);
+            --fuente-titulos: 'Cormorant Garamond', serif;
+            --fuente-cuerpo: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            font-family: var(--fuente-cuerpo);
+            color: var(--texto-oscuro);
+            overflow-x: hidden;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN SUPERIOR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 4%;
+            background-color: var(--blanco-puro);
+            border-bottom: 1px solid var(--gris-suave);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-family: var(--fuente-titulos);
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: var(--texto-oscuro);
+            text-decoration: none;
+        }
+
+        .nav-enlaces {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-enlaces a {
+            text-decoration: none;
+            color: var(--texto-oscuro);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-enlaces a:hover, .nav-enlaces a.activo {
+            color: var(--dorado-premium);
+        }
+
+        .nav-iconos {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--texto-oscuro);
+            transition: color 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--dorado-premium);
+        }
+
+        /* --- NUEVA PORTADA EXCLUSIVA (Solo la imagen de Elena - image_5f9faa.jpg) --- */
+        .hero-banner-limpio {
+            max-width: 1400px;
+            margin: 25px auto;
+            padding: 0 4%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .contenedor-foto-elena {
+            width: 100%;
+            max-height: 650px; /* Altura ideal y estética para no romper el scroll */
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 12px 35px var(--sombra);
+            background-color: var(--gris-suave);
+        }
+
+        .foto-elena-portada {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%; /* Centra la visual en el rostro y postura de Elena */
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        /* --- BARRA DE BÚSQUEDA Y CATEGORÍAS FLOTANTES --- */
+        .seccion-filtros {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .contenedor-busqueda {
+            width: 100%;
+            max-width: 700px;
+            position: relative;
+        }
+
+        .input-busqueda {
+            width: 100%;
+            padding: 16px 25px 16px 55px;
+            border: 1px solid var(--gris-suave);
+            border-radius: 50px;
+            background-color: var(--blanco-puro);
+            font-family: var(--fuente-cuerpo);
+            font-size: 15px;
+            box-shadow: 0 4px 15px var(--sombra);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-busqueda:focus {
+            border-color: var(--dorado-premium);
+            box-shadow: 0 4px 20px rgba(197, 168, 128, 0.25);
+        }
+
+        .icono-busqueda-input {
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a94a0;
+            pointer-events: none;
+        }
+
+        .menu-categorias {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            width: 100%;
+            justify-content: center;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .menu-categorias::-webkit-scrollbar {
+            display: none;
+        }
+
+        .btn-categoria {
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 12px 26px;
+            font-family: var(--fuente-cuerpo);
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: var(--texto-oscuro);
+        }
+
+        .btn-categoria.activo {
+            background-color: var(--texto-oscuro);
+            color: var(--blanco-puro);
+            box-shadow: 0 4px 12px rgba(26, 37, 48, 0.2);
+        }
+
+        .btn-categoria:hover:not(.activo) {
+            background-color: var(--gris-suave);
+            border-color: var(--dorado-premium);
+        }
+
+        /* --- CUADRÍCULA ESTILO MOSAICO PINTEREST --- */
+        .contenedor-mosaico-pinterest {
+            max-width: 1400px;
+            margin: 20px auto 80px auto;
+            padding: 0 20px;
+            column-count: 4;
+            column-gap: 24px;
+        }
+
+        @media (max-width: 1100px) { .contenedor-mosaico-pinterest { column-count: 3; } }
+        @media (max-width: 768px) { 
+            .contenedor-mosaico-pinterest { column-count: 2; column-gap: 16px; } 
+            .contenedor-foto-elena { max-height: 450px; }
+            .menu-categorias { justify-content: flex-start; padding-left: 10px; }
+        }
+        @media (max-width: 480px) { .contenedor-mosaico-pinterest { column-count: 1; } }
+
+        .tarjeta-zapato {
+            background-color: var(--blanco-puro);
+            break-inside: avoid;
+            margin-bottom: 24px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--sombra);
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tarjeta-zapato:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(26, 37, 48, 0.15);
+        }
+
+        .contenedor-imagen-tarjeta {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background-color: #fcfcfc;
+        }
+
+        .imagen-zapato {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .tarjeta-zapato:hover .imagen-zapato {
+            transform: scale(1.04);
+        }
+
+        .capa-interactiva {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(26,37,48,0.1) 0%, rgba(26,37,48,0.4) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            z-index: 2;
+        }
+
+        .tarjeta-zapato:hover .capa-interactiva {
+            opacity: 1;
+        }
+
+        .btn-curacion {
+            align-self: flex-end;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--texto-oscuro);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-family: var(--fuente-cuerpo);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-curacion:hover {
+            background-color: var(--texto-oscuro);
+            color: var(--blanco-puro);
+        }
+
+        .fila-acciones-inferior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .btn-accion-circular {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--texto-oscuro);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-accion-circular:hover {
+            background-color: var(--dorado-premium);
+            color: var(--blanco-puro);
+            transform: scale(1.05);
+        }
+
+        .btn-adquirir {
+            background-color: rgba(26, 37, 48, 0.9);
+            color: var(--blanco-puro);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-family: var(--fuente-cuerpo);
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+        }
+
+        .btn-adquirir:hover {
+            background-color: var(--blanco-puro);
+            color: var(--texto-oscuro);
+        }
+
+        .info-zapato {
+            padding: 16px;
+            background-color: var(--blanco-puro);
+            border-top: 1px solid #faf8f5;
+        }
+
+        .titulo-zapato {
+            font-family: var(--fuente-titulos);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--texto-oscuro);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .descripcion-zapato {
+            font-size: 12px;
+            color: #707a84;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .fila-precio-etiqueta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .precio-zapato {
+            font-family: var(--fuente-cuerpo);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--texto-oscuro);
+        }
+
+        .etiqueta-categoria {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: var(--gris-suave);
+            color: #8c765c;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        /* --- PANEL FLOTANTE LATERAL REFINADO --- */
+        .panel-asistente-flotante {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background-color: var(--texto-oscuro);
+            color: var(--blanco-puro);
+            padding: 10px;
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+
+        .btn-flotante-item {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-flotante-item:hover {
+            color: var(--dorado-premium);
+            background-color: rgba(255,255,255,0.08);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+    <header class="navbar">
+        <a href="#" class="nav-logo">ELENA MODAS</a>
+        <nav>
+            <ul class="nav-enlaces">
+                <li><a href="#" class="activo">Inicio</a></li>
+                <li><a href="#">Colecciones</a></li>
+                <li><a href="#">El Legado</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="nav-iconos">
+            <button class="icon-btn" title="Buscar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+            <button class="icon-btn" title="Bolsa de Compras">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            </button>
+        </div>
+    </header>
+<!-- PORTADA LIMPIA: SOLO LA FOTO DE ELENA -->
+<section class="hero-banner-limpio">
+    <div class="contenedor-foto-elena">
+        <img src="elena.jpg" alt="Elena Portada" class="foto-elena-portada">
+    </div>
+</section>
+    
+    <!-- SECCIÓN FILTROS (BARRA DE BUSQUEDA Y MENÚ DE CATEGORÍAS) -->
+    <section class="seccion-filtros">
+        <div class="contenedor-busqueda">
+            <span class="icono-busqueda-input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="buscadorZapatos" class="input-busqueda" placeholder="Buscar por modelo, estilo o etiqueta...">
+        </div>
+
+        <div class="menu-categorias">
+            <button class="btn-categoria activo" data-categoria="todo">Todo</button>
+            <button class="btn-categoria" data-categoria="tacones">Tacones</button>
+            <button class="btn-categoria" data-categoria="sneakers">Sneakers</button>
+            <button class="btn-categoria" data-categoria="botas">Botas</button>
+            <button class="btn-categoria" data-categoria="sandalias">Sandalias</button>
+            <button class="btn-categoria" data-categoria="flats">Flats</button>
+        </div>
+    </section>
+
+    <!-- CUADRÍCULA ESTILO MOSAICO PINTEREST -->
+    <main class="contenedor-mosaico-pinterest" id="mosaicoZapatos">
+        
+        <!-- TACONES -->
+        <article class="tarjeta-zapato" data-categoria="tacones">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500&auto=format&fit=crop&q=80" alt="Stiletto Velvet" class="imagen-zapato" style="height: 380px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Stiletto Velvet Red</h3>
+                <p class="descripcion-zapato">Elegancia pura en gamuza para galas nocturnas.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$120.00</span>
+                    <span class="etiqueta-categoria">Elegante</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="tarjeta-zapato" data-categoria="tacones">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop&q=80" alt="Sandalias de Tacón Camel" class="imagen-zapato" style="height: 290px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Minimalist Nude Block</h3>
+                <p class="descripcion-zapato">Tacón grueso de cuero premium, ideal para el día a día.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$95.00</span>
+                    <span class="etiqueta-categoria">Casual</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- SNEAKERS -->
+        <article class="tarjeta-zapato" data-categoria="sneakers">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80" alt="Running Pro Pink" class="imagen-zapato" style="height: 320px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Running Pro Pastel</h3>
+                <p class="descripcion-zapato">Tecnología de amortiguación para alto rendimiento deportivo.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$135.00</span>
+                    <span class="etiqueta-categoria">Deportivo</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="tarjeta-zapato" data-categoria="sneakers">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&auto=format&fit=crop&q=80" alt="Retro White Leather" class="imagen-zapato" style="height: 420px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Heritage Leather White</h3>
+                <p class="descripcion-zapato">Inspiración vintage, silueta estilizada y limpia.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$110.00</span>
+                    <span class="etiqueta-categoria">Casual</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- BOTAS -->
+        <article class="tarjeta-zapato" data-categoria="botas">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&auto=format&fit=crop&q=80" alt="Botas de Cuero Negro" class="imagen-zapato" style="height: 450px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Chelsea Croco Luxury</h3>
+                <p class="descripcion-zapato">Bota de piel texturizada con acabados artesanales.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$185.00</span>
+                    <span class="etiqueta-categoria">Elegante</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="tarjeta-zapato" data-categoria="botas">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=500&auto=format&fit=crop&q=80" alt="Botas de Gamuza" class="imagen-zapato" style="height: 340px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Suede Split Ankle</h3>
+                <p class="descripcion-zapato">Botines en tono camel suave, combinación ideal de otoño.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$150.00</span>
+                    <span class="etiqueta-categoria">Casual</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- SANDALIAS -->
+        <article class="tarjeta-zapato" data-categoria="sandalias">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1621996346565-e3dc691499a6?w=500&auto=format&fit=crop&q=80" alt="Sandalias Gladiadoras" class="imagen-zapato" style="height: 300px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Sandalias Gladiador Oro</h3>
+                <p class="descripcion-zapato">Diseño veraniego, fresco y trenzado con hilo dorado.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$65.00</span>
+                    <span class="etiqueta-categoria">Casual</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="tarjeta-zapato" data-categoria="sandalias">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1562273138-f46be4ebdf33?w=500&auto=format&fit=crop&q=80" alt="Sandalia Elegant Heeled" class="imagen-zapato" style="height: 400px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Satin Straps Premium</h3>
+                <p class="descripcion-zapato">Tiras de satén finas para eventos formales bajo el sol.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$115.00</span>
+                    <span class="etiqueta-categoria">Elegante</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- FLATS -->
+        <article class="tarjeta-zapato" data-categoria="flats">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500&auto=format&fit=crop&q=80" alt="Mocasines Clasicos" class="imagen-zapato" style="height: 330px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Classic Loafers Embroidery</h3>
+                <p class="descripcion-zapato">Mocasines estructurados con bordado heráldico refinado.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$140.00</span>
+                    <span class="etiqueta-categoria">Elegante</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="tarjeta-zapato" data-categoria="flats">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=500&auto=format&fit=crop&q=80" alt="Balerinas Nude" class="imagen-zapato" style="height: 370px;">
+                <div class="capa-interactiva">
+                    <button class="btn-curacion">Colección</button>
+                    <div class="fila-acciones-inferior">
+                        <button class="btn-accion-circular">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                        </button>
+                        <button class="btn-adquirir">Ver Más</button>
+                    </div>
+                </div>
+            </div>
+            <div class="info-zapato">
+                <h3 class="titulo-zapato">Ballerina Bow Pointed</h3>
+                <p class="descripcion-zapato">Punta estilizada y lazo minimalista, confort sin perder porte.</p>
+                <div class="fila-precio-etiqueta">
+                    <span class="precio-zapato">$78.00</span>
+                    <span class="etiqueta-categoria">Casual</span>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- PANEL FLOTANTE LATERAL -->
+    <aside class="panel-asistente-flotante">
+        <button class="btn-flotante-item" title="Ver Cuadrícula Inteligente">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </button>
+        <button class="btn-flotante-item" title="Destacados del Legado">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </button>
+        <button class="btn-flotante-item" title="Mi Cuenta">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </button>
+    </aside>
+
+    <!-- SCRIPT DE FILTRADO Y BÚSQUEDA INTERACTIVA EN TIEMPO REAL -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const botonesCategoria = document.querySelectorAll('.btn-categoria');
+            const tarjetasZapatos = document.querySelectorAll('.tarjeta-zapato');
+            const buscador = document.getElementById('buscadorZapatos');
+
+            let categoriaActual = 'todo';
+            let textoBusqueda = '';
+
+            function aplicarFiltroCombinado() {
+                tarjetasZapatos.forEach(tarjeta => {
+                    const categoriaTarjeta = tarjeta.getAttribute('data-categoria');
+                    const titulo = tarjeta.querySelector('.titulo-zapato').textContent.toLowerCase();
+                    const descripcion = tarjeta.querySelector('.descripcion-zapato').textContent.toLowerCase();
+                    const etiqueta = tarjeta.querySelector('.etiqueta-categoria').textContent.toLowerCase();
+                    
+                    const coincideCategoria = (categoriaActual === 'todo' || categoriaTarjeta === categoriaActual);
+                    const coincideBusqueda = (
+                        titulo.includes(textoBusqueda) || 
+                        descripcion.includes(textoBusqueda) || 
+                        etiqueta.includes(textoBusqueda)
+                    );
+
+                    if (coincideCategoria && coincideBusqueda) {
+                        tarjeta.style.display = 'flex';
+                    } else {
+                        tarjeta.style.display = 'none';
+                    }
+                });
+            }
+
+            botonesCategoria.forEach(boton => {
+                boton.addEventListener('click', () => {
+                    botonesCategoria.forEach(b => b.classList.remove('activo'));
+                    boton.classList.add('activo');
+
+                    categoriaActual = boton.getAttribute('data-categoria');
+                    aplicarFiltroCombinado();
+                });
+            });
+
+            buscador.addEventListener('input', (e) => {
+                textoBusqueda = e.target.value.toLowerCase().trim();
+                aplicarFiltroCombinado();
+            });
+        });
+    </script>
+</body>
+</html>
